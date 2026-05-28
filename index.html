@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>죽은 시인의 사회 함께 보기 활동지</title>
+  <style>
+    :root{
+      --bg:#f6f2e9;
+      --paper:#fffaf0;
+      --ink:#26211b;
+      --muted:#6f6559;
+      --line:#ded2c0;
+      --accent:#6d4c2f;
+      --accent-2:#9a6b42;
+      --soft:#efe3d1;
+      --soft-2:#f8eddb;
+      --danger:#9f3d2e;
+      --shadow:0 12px 30px rgba(54,38,23,.12);
+      --radius:22px;
+      --font-size:17px;
+    }
+    [data-theme="dark"]{
+      --bg:#191714;
+      --paper:#25211c;
+      --ink:#f3eadc;
+      --muted:#c8bcae;
+      --line:#4b4035;
+      --accent:#e2b276;
+      --accent-2:#f0c990;
+      --soft:#332b22;
+      --soft-2:#2c261f;
+      --danger:#ff9b8e;
+      --shadow:0 12px 30px rgba(0,0,0,.35);
+    }
+    [data-size="large"]{ --font-size:20px; }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      background:linear-gradient(135deg,var(--bg),var(--soft));
+      color:var(--ink);
+      font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+      font-size:var(--font-size);
+      line-height:1.75;
+    }
+    .wrap{ max-width:1040px; margin:0 auto; padding:28px 18px 70px; }
+    .hero{
+      background:radial-gradient(circle at top left, var(--soft-2), var(--paper));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:34px 30px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      right:-70px; top:-70px;
+      width:230px; height:230px;
+      background:rgba(154,107,66,.12);
+      border-radius:50%;
+    }
+    .eyebrow{ color:var(--accent); font-weight:800; letter-spacing:.04em; margin:0 0 8px; }
+    h1{ margin:0; font-size:clamp(2rem,5vw,3.4rem); letter-spacing:-.04em; line-height:1.15; }
+    .subtitle{ margin:15px 0 0; color:var(--muted); font-size:1.08em; }
+    .question-box{
+      margin-top:22px;
+      padding:18px 20px;
+      border-left:7px solid var(--accent);
+      background:var(--soft-2);
+      border-radius:18px;
+      font-size:1.18em;
+      font-weight:800;
+    }
+    .toolbar{
+      position:sticky; top:0; z-index:10;
+      margin:18px 0 20px;
+      background:rgba(255,250,240,.88);
+      backdrop-filter:blur(12px);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:12px;
+      display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+    }
+    [data-theme="dark"] .toolbar{ background:rgba(37,33,28,.88); }
+    button,.btnlink{
+      border:1px solid var(--line);
+      background:var(--paper);
+      color:var(--ink);
+      padding:9px 13px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:700;
+      font-size:.92em;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+    button:hover,.btnlink:hover{ border-color:var(--accent); color:var(--accent); }
+    button.primary{ background:var(--accent); color:#fff; border-color:var(--accent); }
+    [data-theme="dark"] button.primary{ color:#21180f; }
+    .status{ margin-left:auto; color:var(--muted); font-size:.9em; padding:0 8px; }
+    .nav{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:10px;
+      margin:20px 0;
+    }
+    .nav a{
+      text-decoration:none;
+      color:var(--ink);
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px 14px;
+      font-weight:700;
+      box-shadow:0 6px 18px rgba(54,38,23,.07);
+    }
+    .nav a:hover{ color:var(--accent); border-color:var(--accent); }
+    .card{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:28px;
+      margin:22px 0;
+    }
+    .section-title{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      margin-bottom:18px;
+    }
+    .num{
+      min-width:42px; height:42px;
+      display:grid; place-items:center;
+      border-radius:14px;
+      background:var(--accent);
+      color:#fff;
+      font-weight:900;
+    }
+    [data-theme="dark"] .num{ color:#21180f; }
+    h2{ margin:0; font-size:1.42em; line-height:1.35; letter-spacing:-.02em; }
+    .scene-tag{
+      display:inline-block;
+      margin-top:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      color:var(--accent);
+      background:var(--soft-2);
+      font-weight:800;
+      font-size:.82em;
+    }
+    .prompt{ font-weight:800; margin:22px 0 8px; }
+    textarea,input[type="text"]{
+      width:100%;
+      border:1.5px solid var(--line);
+      background:transparent;
+      color:var(--ink);
+      border-radius:14px;
+      padding:13px 14px;
+      font:inherit;
+      resize:vertical;
+      min-height:76px;
+      outline:none;
+    }
+    input[type="text"]{ min-height:0; height:48px; resize:none; }
+    textarea:focus,input[type="text"]:focus{ border-color:var(--accent); box-shadow:0 0 0 3px rgba(154,107,66,.13); }
+    .inline-answer{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:8px;
+      align-items:center;
+      background:var(--soft-2);
+      border:1px dashed var(--line);
+      border-radius:16px;
+      padding:14px;
+      margin:10px 0;
+    }
+    .inline-answer input{ background:var(--paper); }
+    .checks{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin:12px 0; }
+    label.check{
+      display:flex; align-items:center; gap:8px;
+      background:var(--soft-2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    input[type="checkbox"], input[type="radio"]{ width:19px; height:19px; accent-color:var(--accent); }
+    details{
+      margin-top:16px;
+      border:1px solid var(--line);
+      background:var(--soft-2);
+      border-radius:16px;
+      padding:12px 14px;
+    }
+    summary{ cursor:pointer; font-weight:900; color:var(--accent); }
+    .teacher{ color:var(--muted); margin:10px 0 0; }
+    .notice{
+      background:var(--soft-2);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      margin:18px 0;
+    }
+    .declaration-grid{ display:grid; gap:14px; }
+    .footer-note{ color:var(--muted); text-align:center; margin-top:30px; font-size:.92em; }
+    .toplink{ position:fixed; right:18px; bottom:18px; z-index:20; }
+    @media print{
+      body{ background:white; color:black; font-size:13px; }
+      .toolbar,.nav,.toplink,details{ display:none !important; }
+      .wrap{ max-width:none; padding:0; }
+      .hero,.card{ box-shadow:none; border:1px solid #bbb; break-inside:avoid; page-break-inside:avoid; }
+      textarea,input[type="text"]{ border:1px solid #aaa; min-height:58px; color:black; }
+      .question-box,.inline-answer,.notice,label.check{ background:white; }
+      button{ display:none; }
+    }
+  </style>
+</head>
+<body data-theme="light" data-size="normal">
+  <div class="wrap" id="top">
+    <header class="hero">
+      <p class="eyebrow">영화 함께 보기 활동지</p>
+      <h1>『죽은 시인의 사회』<br>내 삶의 목소리를 찾는 시간</h1>
+      <p class="subtitle">장면을 보며 멈추고, 쓰고, 나누고, 선언하는 수업용 인터랙티브 활동지</p>
+      <div class="question-box">오늘의 핵심 질문: 나는 지금 내 목소리로 살고 있는가?</div>
+    </header>
+
+    <div class="toolbar" role="toolbar" aria-label="활동지 도구">
+      <button class="primary" onclick="window.print()">인쇄/PDF 저장</button>
+      <button onclick="downloadAnswers()">내 응답 저장</button>
+      <button onclick="toggleTheme()">다크/라이트</button>
+      <button onclick="toggleSize()">큰 글씨</button>
+      <button onclick="toggleTeacherTips()">교수자 팁</button>
+      <button onclick="resetForm()">응답 초기화</button>
+      <span class="status" id="saveStatus">자동 저장 준비됨</span>
+    </div>
+
+    <nav class="nav" aria-label="빠른 이동">
+      <a href="#s1">1. 영향 주는 목소리</a>
+      <a href="#s2">2. 오늘을 붙들라</a>
+      <a href="#s3">3. 교과서 찢기</a>
+      <a href="#s4">4. 자기 걸음</a>
+      <a href="#s5">5. 토드의 목소리</a>
+      <a href="#s6">6. 닐과 아버지</a>
+      <a href="#s7">7. 책상 위에 서기</a>
+      <a href="#s8">8. 닮은 인물</a>
+      <a href="#s9">9. 삶의 선언문</a>
+      <a href="#s10">10. 10년 뒤의 나</a>
+    </nav>
+
+    <section class="card" id="nameCard">
+      <div class="section-title">
+        <div class="num">이름</div>
+        <div><h2>학생 정보</h2><span class="scene-tag">개별 작성</span></div>
+      </div>
+      <p class="prompt">이름</p>
+      <input type="text" name="studentName" placeholder="이름을 입력하세요" />
+      <details class="teacher-tip">
+        <summary>교수자 진행 팁</summary>
+        <p class="teacher">수업 시작 전 학생들에게 이 활동지는 정답지가 아니라 자기 삶을 성찰하는 기록지라고 안내하면 좋습니다.</p>
+      </details>
+    </section>
+
+    <section class="card" id="s1">
+      <div class="section-title"><div class="num">1</div><div><h2>지금 나에게 가장 큰 영향을 주는 목소리</h2><span class="scene-tag">도입 질문</span></div></div>
+      <p class="prompt">내 삶에 가장 큰 영향을 주는 목소리는 무엇입니까?</p>
+      <div class="checks">
+        <label class="check"><input type="checkbox" name="voice" value="부모님">부모님</label>
+        <label class="check"><input type="checkbox" name="voice" value="친구">친구</label>
+        <label class="check"><input type="checkbox" name="voice" value="선생님">선생님</label>
+        <label class="check"><input type="checkbox" name="voice" value="사회의 기준">사회의 기준</label>
+        <label class="check"><input type="checkbox" name="voice" value="성적">성적</label>
+        <label class="check"><input type="checkbox" name="voice" value="취업">취업</label>
+        <label class="check"><input type="checkbox" name="voice" value="돈">돈</label>
+        <label class="check"><input type="checkbox" name="voice" value="나 자신">나 자신</label>
+        <label class="check"><input type="checkbox" name="voice" value="하나님">하나님</label>
+      </div>
+      <p class="prompt">기타</p>
+      <input type="text" name="voiceOther" placeholder="기타 영향을 주는 목소리를 적어보세요" />
+      <p class="prompt">그 이유는?</p>
+      <textarea name="voiceReason" placeholder="내 삶에 왜 그 목소리가 크게 들리는지 적어보세요."></textarea>
+      <details class="teacher-tip"><summary>교수자 진행 팁</summary><p class="teacher">처음부터 발표를 요구하지 말고 2~3분 정도 조용히 쓰게 하십시오. 이후 원하는 학생만 한 문장으로 나누게 하면 부담이 줄어듭니다.</p></details>
+    </section>
+
+    <section class="card" id="s2">
+      <div class="section-title"><div class="num">2</div><div><h2>장면 1 — 오늘을 붙들라는 장면</h2><span class="scene-tag">시간 · 죽음 · 오늘의 선택</span></div></div>
+      <p class="prompt">이 장면에서 가장 인상 깊었던 것은?</p>
+      <textarea name="scene1Impression"></textarea>
+      <p class="prompt">내가 계속 미루고 있는 것은?</p>
+      <textarea name="scene1Delay"></textarea>
+      <p class="prompt">내가 오늘 붙들어야 할 것은</p>
+      <div class="inline-answer"><input type="text" name="scene1Hold" placeholder="예: 내 진짜 마음, 공부 습관, 부모님과의 대화"><strong>이다.</strong></div>
+      <details class="teacher-tip"><summary>교수자 진행 멘트</summary><p class="teacher">“시간이 무한하다면 아무렇게나 살아도 됩니다. 그러나 시간이 유한하다면 오늘의 선택은 가볍지 않습니다.”</p></details>
+    </section>
+
+    <section class="card" id="s3">
+      <div class="section-title"><div class="num">3</div><div><h2>장면 2 — 교과서를 찢는 장면</h2><span class="scene-tag">정답주의 · 비판적 사고 · 배움</span></div></div>
+      <p class="prompt">키팅 선생이 정말로 찢고 싶었던 것은 무엇이었을까?</p>
+      <textarea name="scene2Meaning"></textarea>
+      <p class="prompt">내가 찢어버리고 싶은 고정관념은</p>
+      <div class="inline-answer"><span>“</span><input type="text" name="scene2Bias" placeholder="예: 실패하면 끝이다"><strong>” 이다.</strong></div>
+      <p class="prompt">왜 그렇게 생각하는가?</p>
+      <textarea name="scene2Why"></textarea>
+      <details class="teacher-tip"><summary>교수자 진행 멘트</summary><p class="teacher">“키팅 선생이 찢으라고 한 것은 책 자체가 아니라, 시와 삶을 공식으로만 평가하려는 태도였습니다.”</p></details>
+    </section>
+
+    <section class="card" id="s4">
+      <div class="section-title"><div class="num">4</div><div><h2>장면 3 — 같은 박자로 걷는 장면</h2><span class="scene-tag">동조 · 개성 · 자기 걸음</span></div></div>
+      <p class="prompt">우리 사회가 학생들을 같은 박자로 걷게 만드는 것은 무엇일까?</p>
+      <textarea name="scene3Pressure"></textarea>
+      <p class="prompt">나는 언제 내 걸음을 잃어버리는가?</p>
+      <textarea name="scene3LoseStep"></textarea>
+      <p class="prompt">내가 지키고 싶은 나의 걸음은</p>
+      <div class="inline-answer"><input type="text" name="scene3MyStep" placeholder="예: 비교하지 않고 꾸준히 성장하는 걸음"><strong>이다.</strong></div>
+      <details class="teacher-tip"><summary>짧은 몸 활동 제안</summary><p class="teacher">학생들을 자리에서 일어나게 한 뒤 10초 동안 각자의 속도로 걷게 합니다. 다시 앉힌 후 “자기 속도로 걷는 것이 쉬웠습니까, 어려웠습니까?”라고 묻습니다.</p></details>
+    </section>
+
+    <section class="card" id="s5">
+      <div class="section-title"><div class="num">5</div><div><h2>장면 4 — 토드가 자기 목소리를 내는 장면</h2><span class="scene-tag">침묵 · 자기표현 · 믿어주는 사람</span></div></div>
+      <p class="prompt">토드는 왜 처음에 말하지 못했을까?</p>
+      <textarea name="scene4Todd"></textarea>
+      <p class="prompt">나를 침묵하게 만드는 것은 무엇인가?</p>
+      <textarea name="scene4Silence"></textarea>
+      <p class="prompt">사실 나는</p>
+      <div class="inline-answer"><input type="text" name="scene4WantToSay" placeholder="마음속에 있었지만 표현하지 못한 말"><strong>라고 말하고 싶었다.</strong></div>
+      <details class="teacher-tip"><summary>교수자 진행 팁</summary><p class="teacher">이 문항은 민감할 수 있으므로 발표를 강요하지 않는 것이 좋습니다. 원하는 학생만 나누도록 하십시오.</p></details>
+    </section>
+
+    <section class="card" id="s6">
+      <div class="section-title"><div class="num">6</div><div><h2>장면 5 — 닐과 아버지의 갈등 장면</h2><span class="scene-tag">꿈 · 부모의 기대 · 사랑과 통제</span></div></div>
+      <div class="notice"><strong>주의:</strong> 이 장면은 가족 관계나 진로 압박과 연결될 수 있습니다. 말하고 싶지 않은 내용은 발표하지 않아도 됩니다.</div>
+      <p class="prompt">닐이 진짜로 원했던 것은 무엇이었을까?</p>
+      <textarea name="scene5NeilWant"></textarea>
+      <p class="prompt">닐의 아버지가 두려워했던 것은 무엇이었을까?</p>
+      <textarea name="scene5FatherFear"></textarea>
+      <p class="prompt">사랑이 통제가 되지 않으려면 무엇이 필요할까?</p>
+      <textarea name="scene5Love"></textarea>
+      <p class="prompt">내가 진심으로 말하고 싶은 사람은</p>
+      <div class="inline-answer"><input type="text" name="scene5Person"><strong>이다.</strong></div>
+      <p class="prompt">그 사람에게 하고 싶은 말은</p>
+      <div class="inline-answer"><input type="text" name="scene5Words"><strong>이다.</strong></div>
+      <details class="teacher-tip"><summary>교수자 진행 멘트</summary><p class="teacher">“사랑이 대화 없이 명령이 될 때, 가장 가까운 관계가 가장 아픈 감옥이 될 수 있습니다.”</p></details>
+    </section>
+
+    <section class="card" id="s7">
+      <div class="section-title"><div class="num">7</div><div><h2>장면 6 — 마지막 책상 위에 올라서는 장면</h2><span class="scene-tag">용기 · 존중 · 새로운 시선</span></div></div>
+      <p class="prompt">책상 위에 올라선다는 것은 나에게 어떤 의미인가?</p>
+      <textarea name="scene6DeskMeaning"></textarea>
+      <p class="prompt">내가 오늘 마음속으로 올라서고 싶은 책상은</p>
+      <div class="inline-answer"><span>“</span><input type="text" name="scene6MyDesk" placeholder="예: 실패에 대한 두려움"><strong>” 이다.</strong></div>
+      <details class="teacher-tip"><summary>상징 활동 제안</summary><p class="teacher">실제로 책상 위에 올라가기보다, 학생들이 종이에 ‘내가 넘어설 두려움’을 쓰고 잠시 손에 들게 하면 안전하면서도 상징성이 살아납니다.</p></details>
+    </section>
+
+    <section class="card" id="s8">
+      <div class="section-title"><div class="num">8</div><div><h2>나는 어떤 인물과 가장 가까운가?</h2><span class="scene-tag">자기 이해</span></div></div>
+      <p class="prompt">나는 영화 속 인물 중 누구와 가장 가까운가?</p>
+      <div class="checks">
+        <label class="check"><input type="radio" name="character" value="닐">닐 — 꿈이 있지만 주변의 기대와 충돌하는 사람</label>
+        <label class="check"><input type="radio" name="character" value="토드">토드 — 말하고 싶지만 쉽게 표현하지 못하는 사람</label>
+        <label class="check"><input type="radio" name="character" value="찰리">찰리 — 자유를 강하게 외치지만 때로는 거칠 수 있는 사람</label>
+        <label class="check"><input type="radio" name="character" value="녹스">녹스 — 감정에 솔직하지만 미숙한 사람</label>
+        <label class="check"><input type="radio" name="character" value="키팅 선생">키팅 선생 — 누군가의 가능성을 깨워주고 싶은 사람</label>
+        <label class="check"><input type="radio" name="character" value="닐의 아버지">닐의 아버지 — 사랑하지만 불안 때문에 통제하려는 사람</label>
+      </div>
+      <p class="prompt">내가 그 인물과 가깝다고 생각한 이유는?</p>
+      <textarea name="characterReason"></textarea>
+    </section>
+
+    <section class="card" id="s9">
+      <div class="section-title"><div class="num">9</div><div><h2>나의 삶의 선언문</h2><span class="scene-tag">마무리 선언</span></div></div>
+      <p>오늘 수업을 마치며, 나 자신에게 선언합니다.</p>
+      <div class="declaration-grid">
+        <div><p class="prompt">나는 이제부터</p><div class="inline-answer"><input type="text" name="declare1"><strong>하지 않겠습니다.</strong></div></div>
+        <div><p class="prompt">나는</p><div class="inline-answer"><input type="text" name="declare2"><strong>을 더 정직하게 말하겠습니다.</strong></div></div>
+        <div><p class="prompt">나는</p><div class="inline-answer"><input type="text" name="declare3"><strong>을 두려워하지 않겠습니다.</strong></div></div>
+        <div><p class="prompt">나는</p><div class="inline-answer"><input type="text" name="declare4"><strong>하는 사람으로 살겠습니다.</strong></div></div>
+      </div>
+      <details class="teacher-tip"><summary>교수자 진행 팁</summary><p class="teacher">시간이 허락하면 2~3명만 자발적으로 낭독하게 하십시오. 억지 발표보다 자발적 나눔이 훨씬 깊게 남습니다.</p></details>
+    </section>
+
+    <section class="card" id="s10">
+      <div class="section-title"><div class="num">10</div><div><h2>10년 뒤의 나에게</h2><span class="scene-tag">기억에 남는 한 문장</span></div></div>
+      <p class="prompt">10년 뒤의 나에게 한 문장을 남긴다면?</p>
+      <div class="inline-answer"><strong>너는 부디</strong><input type="text" name="future1" placeholder="잃지 말아야 할 것"><strong>을 잃지 말아라.</strong></div>
+      <div class="inline-answer"><strong>너는 더 이상</strong><input type="text" name="future2" placeholder="나를 숨기게 만드는 것"><strong>때문에 너 자신을 숨기지 말아라.</strong></div>
+      <p class="prompt">오늘의 나는 너에게 이 말을 남긴다.</p>
+      <textarea name="futureMessage" placeholder="10년 뒤의 나에게 남기고 싶은 말을 적어보세요."></textarea>
+      <details class="teacher-tip"><summary>교수자 마무리 멘트</summary><p class="teacher">“여러분의 인생은 누가 대신 살아줄 수 없습니다. 자기 목소리로 산다는 것은 마음대로 산다는 뜻이 아니라, 내가 선택한 삶을 책임 있게 살아간다는 뜻입니다.”</p></details>
+    </section>
+
+    <p class="footer-note">이 활동지는 브라우저에 자동 저장됩니다. 공용 컴퓨터에서는 수업 후 ‘응답 초기화’를 눌러 주세요.</p>
+  </div>
+  <a class="btnlink toplink" href="#top">맨 위로</a>
+
+  <script>
+    const STORAGE_KEY = 'dead_poets_activity_v1';
+    const statusEl = document.getElementById('saveStatus');
+    const fields = () => Array.from(document.querySelectorAll('textarea,input[type="text"],input[type="checkbox"],input[type="radio"]'));
+
+    function collectData(){
+      const data = { theme: document.body.dataset.theme, size: document.body.dataset.size, fields: {} };
+      fields().forEach((el, idx) => {
+        const key = el.name ? `${el.name}__${idx}` : `field__${idx}`;
+        if(el.type === 'checkbox' || el.type === 'radio') data.fields[key] = { checked: el.checked, value: el.value, name: el.name, type: el.type };
+        else data.fields[key] = { value: el.value, name: el.name, type: el.type };
+      });
+      return data;
+    }
+    function saveData(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collectData()));
+      const now = new Date();
+      statusEl.textContent = `자동 저장됨 ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+    }
+    function loadData(){
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return;
+      try{
+        const data = JSON.parse(raw);
+        if(data.theme) document.body.dataset.theme = data.theme;
+        if(data.size) document.body.dataset.size = data.size;
+        fields().forEach((el, idx) => {
+          const key = el.name ? `${el.name}__${idx}` : `field__${idx}`;
+          const item = data.fields[key];
+          if(!item) return;
+          if(el.type === 'checkbox' || el.type === 'radio') el.checked = !!item.checked;
+          else el.value = item.value || '';
+        });
+        statusEl.textContent = '이전 응답 불러옴';
+      }catch(e){ console.warn(e); }
+    }
+    function toggleTheme(){
+      document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+      saveData();
+    }
+    function toggleSize(){
+      document.body.dataset.size = document.body.dataset.size === 'large' ? 'normal' : 'large';
+      saveData();
+    }
+    function toggleTeacherTips(){
+      document.querySelectorAll('details.teacher-tip').forEach(d => d.open = !d.open);
+    }
+    function resetForm(){
+      if(!confirm('작성한 응답을 모두 지울까요?')) return;
+      fields().forEach(el => {
+        if(el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+        else el.value = '';
+      });
+      localStorage.removeItem(STORAGE_KEY);
+      statusEl.textContent = '응답 초기화됨';
+    }
+    function downloadAnswers(){
+      const lines = [];
+      lines.push('『죽은 시인의 사회』 함께 보기 활동지 응답');
+      lines.push('저장일시: ' + new Date().toLocaleString('ko-KR'));
+      lines.push('');
+      const named = new Map();
+      fields().forEach(el => {
+        const label = el.name || '응답';
+        if(el.type === 'checkbox'){
+          if(el.checked){
+            if(!named.has(label)) named.set(label, []);
+            named.get(label).push(el.value);
+          }
+        } else if(el.type === 'radio'){
+          if(el.checked) named.set(label, el.value);
+        } else if(el.value.trim()){
+          named.set(label, el.value.trim());
+        }
+      });
+      named.forEach((value, key) => {
+        lines.push(`[${key}]`);
+        lines.push(Array.isArray(value) ? value.join(', ') : value);
+        lines.push('');
+      });
+      const blob = new Blob([lines.join('\n')], {type:'text/plain;charset=utf-8'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      const student = document.querySelector('input[name="studentName"]').value.trim() || 'student';
+      a.download = `dead-poets-activity-${student}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(a.href);
+      a.remove();
+    }
+    document.addEventListener('input', saveData);
+    document.addEventListener('change', saveData);
+    loadData();
+  </script>
+</body>
+</html>
